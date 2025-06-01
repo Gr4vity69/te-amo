@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corazón de Partículas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'CrystalUniverse';
+            src: url('./CrystalUniverse-Oblique.ttf') format('truetype');
+            font-weight: normal;
+            font-style: oblique;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #111;
+        }
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+        #mensaje {
+            position: absolute;
+            top: 8%;
+            width: 100vw;
+            text-align: center;
+            font-family: 'CrystalUniverse', cursive;
+            font-weight: 900;
+            font-size: 3.2rem;
+            letter-spacing: 2.5px;
+            color: #111; /* Interior negro */
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+            z-index: 10;
+            text-shadow: none;
+            -webkit-text-stroke: 3px rgb(220,30,70); /* Reborde rojo */
+            /* Animación inicial y movimiento sutil */
+            transform: scale(0.95) translateY(10px);
+            transition: opacity 0.5s, filter 0.5s, transform 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+            filter: blur(2px);
+            animation: mensajeVivo 5s ease-in-out 1.2s infinite alternate;
+        }
+        @keyframes mensajeVivo {
+            0% { transform: scale(1) translateY(0px) rotate(-1deg); filter: blur(0.5px); }
+            25% { transform: scale(1.01) translateY(-2px) rotate(1deg); filter: blur(0.2px); }
+            50% { transform: scale(0.99) translateY(1.5px) rotate(-1.5deg); filter: blur(0.5px); }
+            75% { transform: scale(1.01) translateY(-1.5px) rotate(1.2deg); filter: blur(0.2px); }
+            100% { transform: scale(1) translateY(0px) rotate(-1deg); filter: blur(0.5px); }
+        }
+        #dedicatoria {
+            position: fixed;
+            right: 2vw;
+            bottom: 1.5vh;
+            color: #fff;
+            font-size: 0.85rem;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            opacity: 0.6;
+            text-align: right;
+            z-index: 20;
+            pointer-events: none;
+            user-select: none;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body>
+    <div id="mensaje">Te entrego<br>Mi corazon</div>
+    <canvas id="corazon"></canvas>
+    <div id="dedicatoria">de: Alvaro<br>para: Angi (el amor de mi vida)</div>
+    <script src="corazon.js"></script>
+    <script>
+    // Animar la opacidad y entrada del mensaje con efecto de "suspense"
+    const mensaje = document.getElementById('mensaje');
+    let op = 0;
+    let animDone = false;
+    function fadeInMensaje() {
+        op += 0.025;
+        if (op > 1) op = 1;
+        mensaje.style.opacity = op;
+        // Animación de entrada: desenfoque y escala
+        mensaje.style.filter = `blur(${2 - 2 * op}px)`;
+        mensaje.style.transform = `scale(${0.95 + 0.05 * op}) translateY(${10 - 10 * op}px)`;
+        if (op < 1) {
+            requestAnimationFrame(fadeInMensaje);
+        } else if (!animDone) {
+            // Cuando termina, deja la animación sutil
+            mensaje.style.filter = 'blur(0.5px)';
+            mensaje.style.transform = 'scale(1) translateY(0px)';
+            animDone = true;
+        }
+    }
+    setTimeout(fadeInMensaje, 600);
+    </script>
+</body>
+</html>
