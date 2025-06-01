@@ -23,6 +23,7 @@ function heartFunction(t, scale = 1) {
 }
 
 const PARTICLE_COUNT = 2000; // Aumenta la cantidad de partículas
+const PARTICLE_SIZE = 3; // Tamaño de las partículas
 const particles = [];
 
 // Generar partículas en el borde y dentro del corazón
@@ -152,7 +153,7 @@ function animate() {
         }
         // Dibujar partícula
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, PARTICLE_SIZE, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.shadowColor = '#ff0033';
         ctx.shadowBlur = 10;
